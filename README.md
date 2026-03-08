@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UI/UX Doctor
 
-## Getting Started
+Visual UI debugger for fast-moving product teams.  
+UI/UX Doctor analyzes session evidence, detects high-friction UI patterns, and generates accessible React/Tailwind prescriptions.
 
-First, run the development server:
+## Demo Video https://www.loom.com/share/6093d641ea0f49f6a3830cf32a654e60
 
+## ✨ What it does
+
+- Detects high-friction UI issues from uploaded session data
+- Shows visual evidence with:
+  - frustration timeline
+  - heatmap overlays
+  - before/after UI comparison
+- Generates UI/UX prescriptions (React + Tailwind + risk notes)
+- Captures accept/reject feedback and learns team preferences
+- Tracks analytics in dashboard:
+  - acceptance trend
+  - remaining issues
+  - estimated recovery in USD
+  - learning memory
+- Enforces plan usage limits (Analyze credits + UI/UX credits)
+
+---
+
+## 🧱 Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- ESLint
+
+---
+
+## 🚀 Getting Started
+
+### 1) Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2) Run dev server
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3) Production checks
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Demo Flow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Go to `/upload`
+2. Upload sample session JSON (or run demo mode)
+3. Review issues in `/results/[jobId]`
+4. Generate and accept/reject prescriptions
+5. Open `/dashboard` for analytics and learned preferences
+6. Click issue links from dashboard to jump to issue-focused results
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📌 Key Routes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### App pages
+- `/` — Landing
+- `/upload` — Session upload
+- `/results/[jobId]` — Analysis + prescriptions
+- `/dashboard` — Analytics and usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### API routes
+- `POST /api/analyze`
+- `POST /api/generate-fix`
+- `POST /api/feedback`
+- `GET /api/dashboard`
+- `GET /api/billing/status`
+
+---
+
+## 📂 Presentation Decks
+
+Located in project root:
+
+- `UI_UX_Doctor_MVP_Presentation.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Colorful.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Hackathon_Flashy.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Hackathon_2min.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Investor_Clean.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Enterprise_Minimal.pptx`
+
+---
+
+## 🔐 Notes
+
+- Do **not** commit `node_modules/`, `.next/`, or `.env*`.
+- Keep demo/customer data sanitized before sharing publicly.
+
+---
+
+## 📄 License
+
+MIT (recommended for hackathon/open-source sharing).
