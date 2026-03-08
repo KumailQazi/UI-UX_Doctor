@@ -88,11 +88,6 @@ npm run build
 Located in project root:
 
 - `UI_UX_Doctor_MVP_Presentation.pptx`
-- `UI_UX_Doctor_MVP_Presentation_Colorful.pptx`
-- `UI_UX_Doctor_MVP_Presentation_Hackathon_Flashy.pptx`
-- `UI_UX_Doctor_MVP_Presentation_Hackathon_2min.pptx`
-- `UI_UX_Doctor_MVP_Presentation_Investor_Clean.pptx`
-- `UI_UX_Doctor_MVP_Presentation_Enterprise_Minimal.pptx`
 
 ---
 
