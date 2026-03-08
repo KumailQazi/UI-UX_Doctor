@@ -1,0 +1,32 @@
+[
+  {
+    "issueId": "iss_dead_click_1",
+    "type": "dead_click",
+    "severity": "high",
+    "summary": "Users repeatedly click a pricing card header that looks interactive but does nothing.",
+    "evidence": [
+      {
+        "timestampSec": 12,
+        "frameRef": "frame_012.jpg",
+        "note": "3 repeated clicks on card title region without state change."
+      }
+    ],
+    "confidence": 0.88,
+    "whyItMatters": "Creates friction during plan selection and increases drop-off before checkout."
+  },
+  {
+    "issueId": "iss_hidden_cta_1",
+    "type": "mobile_hidden_cta",
+    "severity": "high",
+    "summary": "Primary checkout CTA is below the fold on common mobile viewport heights.",
+    "evidence": [
+      {
+        "timestampSec": 28,
+        "frameRef": "frame_028.jpg",
+        "note": "CTA not visible until second scroll; users hesitate and bounce."
+      }
+    ],
+    "confidence": 0.84,
+    "whyItMatters": "Reduces conversion by hiding the next-step action at a critical moment."
+  }
+]

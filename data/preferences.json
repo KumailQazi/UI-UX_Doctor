@@ -1,0 +1,342 @@
+{
+  "projects": {
+    "demo-project": {
+      "preferences": [
+        "Use sticky mobile CTA for checkout",
+        "Avoid icon-only buttons",
+        "Prefer rounded-md and high-contrast focus states"
+      ],
+      "feedbackLog": [
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:30:56.665Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:00.678Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:02.261Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:04.283Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": false,
+          "editedByUser": false,
+          "notes": "Needs additional layout tuning.",
+          "createdAt": "2026-03-07T20:31:05.376Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": false,
+          "editedByUser": false,
+          "notes": "Needs additional layout tuning.",
+          "createdAt": "2026-03-07T20:31:06.297Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:07.275Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:07.480Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:07.679Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:07.914Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:12.801Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:13.009Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:13.242Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:13.426Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:13.628Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:31:13.816Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:38:21.113Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:47:00.921Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:50:23.749Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:53:20.681Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:56:46.715Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T20:57:34.460Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:04:34.907Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:09:57.721Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:14:55.356Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:19:39.521Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:22:50.359Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:24:16.566Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": false,
+          "editedByUser": false,
+          "notes": "Needs additional layout tuning.",
+          "createdAt": "2026-03-07T21:24:32.998Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:26:32.556Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:29:40.667Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:32:18.647Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:32:40.180Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:40:15.974Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:42:45.835Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:46:29.223Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:54:49.689Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T21:55:06.333Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:01:50.364Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:02:23.276Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:07:59.094Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:18:04.542Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great fix. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:23:35.260Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T22:53:00.332Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T23:19:59.074Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T23:31:43.525Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-07T23:33:19.567Z"
+        }
+      ]
+    }
+  }
+}
