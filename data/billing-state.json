@@ -19,7 +19,7 @@
   "usage": {
     "2026-03": {
       "demo-org": {
-        "analyze": 3,
+        "analyze": 6,
         "generate_fix": 1
       }
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SessionEvent {
   eventType?: string;
@@ -24,10 +24,15 @@ interface SessionData {
 
 export default function UploadPanel() {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [projectId, setProjectId] = useState("demo-project");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [sessionFile, setSessionFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const runAnalysis = async () => {
     setLoading(true);
@@ -72,6 +77,15 @@ export default function UploadPanel() {
       setLoading(false);
     }
   };
+
+  if (!mounted) {
+    return (
+      <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-zinc-900">Upload Session</h2>
+        <p className="mt-2 text-sm text-zinc-600">Preparing upload interface...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">

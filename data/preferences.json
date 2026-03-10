@@ -335,6 +335,27 @@
           "editedByUser": false,
           "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
           "createdAt": "2026-03-07T23:33:19.567Z"
+        },
+        {
+          "issueId": "iss_hidden_cta_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-08T06:05:51.635Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-08T06:06:08.903Z"
+        },
+        {
+          "issueId": "iss_dead_click_1",
+          "fixAccepted": true,
+          "editedByUser": false,
+          "notes": "Great UI/UX prescription. Keep sticky CTA and strong focus states.",
+          "createdAt": "2026-03-10T10:57:00.147Z"
         }
       ]
     }
