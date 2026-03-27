@@ -29,6 +29,7 @@ UI/UX Doctor analyzes session evidence, detects high-friction UI patterns, and g
 - React 19
 - TypeScript
 - Tailwind CSS
+- AdaL CLI (AI agent framework)
 - ESLint
 
 ---
@@ -52,6 +53,19 @@ Open [http://localhost:3000](http://localhost:3000).
 npm run lint
 npm run build
 ```
+
+### 4) Environment setup
+Copy the example config and adjust values for your environment:
+
+```bash
+cp .env.example .env.local
+```
+
+Key variables:
+- `NEXT_PUBLIC_DEFAULT_PROJECT_ID` — default project context in UI/API fallbacks
+- `DEMO_MODE` — enables seeded demo behavior
+- `STRICT_TWO_ISSUES` — caps analyze output to top 2 issues
+- `UIUX_DOCTOR_*` — data paths and plan limits (free/pro/enterprise)
 
 ---
 
@@ -88,6 +102,11 @@ npm run build
 Located in project root:
 
 - `UI_UX_Doctor_MVP_Presentation.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Colorful.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Hackathon_Flashy.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Hackathon_2min.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Investor_Clean.pptx`
+- `UI_UX_Doctor_MVP_Presentation_Enterprise_Minimal.pptx`
 
 ---
 
