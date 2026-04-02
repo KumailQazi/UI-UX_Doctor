@@ -1,10 +1,14 @@
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { NextResponse } from "next/server";
 import { guardUsage, incrementUsage } from "@/lib/billing";
+import { DEFAULT_PROJECT_ID } from "@/lib/constants";
+import { DEMO_MODE, DEMO_ISSUES_PATH, STRICT_TWO_ISSUES } from "@/lib/env";
 import type { AnalyzeResponse, HeatmapPoint, Issue } from "@/lib/issueSchema";
 import { rankIssues } from "@/lib/scoring";
+import { extractFrames } from "@/lib/frameExtractor";
+import { analyzeFramesWithVisionModel } from "@/lib/visionAnalystAgent";
+import { getModelForAgent } from "@/lib/modelRouter";
 
 interface SessionEvent {
   eventType?: string;
@@ -104,7 +108,7 @@ function enrichIssuesWithHeatmap(issues: Issue[], sessionData?: SessionData): Is
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as AnalyzeRequest;
-  const projectId = body.projectId ?? "demo-project";
+  const projectId = body.projectId ?? DEFAULT_PROJECT_ID;
   const usageGate = await guardUsage(projectId, "analyze");
 
   if (!usageGate.allowed) {
@@ -119,15 +123,27 @@ export async function POST(request: Request) {
     );
   }
 
-  const demoIssuesPath = path.join(process.cwd(), "data", "demo-issues.json");
-  const raw = await readFile(demoIssuesPath, "utf-8");
-  const parsedIssues = JSON.parse(raw) as Issue[];
+  let parsedIssues: Issue[] = [];
+
+  if (DEMO_MODE) {
+    const raw = await readFile(DEMO_ISSUES_PATH, "utf-8");
+    parsedIssues = JSON.parse(raw) as Issue[];
+  } else {
+    const frames = await extractFrames(body.videoUrl);
+    const visionModel = getModelForAgent("vision", usageGate.plan);
+    parsedIssues = await analyzeFramesWithVisionModel(
+      {
+        frames,
+        sessionMetadata: body.sessionData,
+      },
+      visionModel
+    );
+  }
 
   const enriched = enrichIssuesWithHeatmap(parsedIssues, body.sessionData);
   const ranked = rankIssues(enriched);
 
-  const strictTwoIssues = process.env.STRICT_TWO_ISSUES === "true";
-  const issues = strictTwoIssues ? ranked.slice(0, 2) : ranked.slice(0, 3);
+  const issues = STRICT_TWO_ISSUES ? ranked.slice(0, 2) : ranked.slice(0, 3);
 
   const response: AnalyzeResponse & { projectId: string } = {
     jobId: randomUUID(),
