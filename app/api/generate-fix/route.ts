@@ -1,7 +1,9 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { NextResponse } from "next/server";
 import { guardUsage, incrementUsage } from "@/lib/billing";
+import { DEMO_MODE, PREFERENCES_PATH } from "@/lib/env";
+import { generateFixWithLLM } from "@/lib/frontendFixAgent";
+import { getModelForAgent } from "@/lib/modelRouter";
 import type {
   GenerateFixRequest,
   GenerateFixResponse,
@@ -108,14 +110,26 @@ export async function POST(request: Request) {
     );
   }
 
-  const preferencesPath = path.join(process.cwd(), "data", "preferences.json");
-  const raw = await readFile(preferencesPath, "utf-8");
+  const raw = await readFile(PREFERENCES_PATH, "utf-8");
   const preferencesData = JSON.parse(raw) as PreferencesFile;
 
   const projectPreferences =
     preferencesData.projects?.[body.projectId]?.preferences ?? [];
 
-  const baseFix = getFixForIssue(body.issue);
+  let baseFix: GenerateFixResponse;
+  if (DEMO_MODE) {
+    baseFix = getFixForIssue(body.issue);
+  } else {
+    const fixModel = getModelForAgent("fix", usageGate.plan, body.issue);
+    baseFix = await generateFixWithLLM(
+      {
+        issue: body.issue,
+        preferences: projectPreferences,
+        componentContext: body.componentContext,
+      },
+      fixModel
+    );
+  }
   const personalizedNote =
     usageGate.features.personalization && projectPreferences.length > 0
       ? `Personalized using team preferences: ${projectPreferences
