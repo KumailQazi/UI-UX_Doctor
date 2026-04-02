@@ -1,7 +1,10 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
+import { DEMO_MODE } from "@/lib/env";
 import type { FeedbackRequest } from "@/lib/issueSchema";
+import { getModelForAgent } from "@/lib/modelRouter";
+import { learnFromFeedbackWithLLM } from "@/lib/preferenceMemoryAgent";
 
 interface PreferencesFile {
   projects: Record<
@@ -61,11 +64,24 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString(),
   });
 
-  const inferred = inferPreferenceFromNotes(body.notes);
-  if (body.fixAccepted && inferred) {
-    const existing = new Set(data.projects[body.projectId].preferences);
-    existing.add(inferred);
-    data.projects[body.projectId].preferences = [...existing];
+  if (body.notes) {
+    if (DEMO_MODE) {
+      const inferred = inferPreferenceFromNotes(body.notes);
+      if (body.fixAccepted && inferred) {
+        const existing = new Set(data.projects[body.projectId].preferences);
+        existing.add(inferred);
+        data.projects[body.projectId].preferences = [...existing];
+      }
+    } else {
+      const preferenceModel = getModelForAgent("preference");
+      data.projects[body.projectId].preferences = await learnFromFeedbackWithLLM(
+        {
+          feedback: body,
+          existingPreferences: data.projects[body.projectId].preferences,
+        },
+        preferenceModel
+      );
+    }
   }
 
   await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
