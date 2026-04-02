@@ -92,8 +92,104 @@ Key variables:
 - `POST /api/analyze`
 - `POST /api/generate-fix`
 - `POST /api/feedback`
+- `POST /api/prioritize`
 - `GET /api/dashboard`
 - `GET /api/billing/status`
+- `GET /api/health/llm`
+
+---
+
+## 🎯 Lead Surgeon Prioritization (`/api/prioritize`)
+
+Use this endpoint to decide whether a feature should be built now or parked, using the 4-check scope framework from `AGENTS_ROLES.md`.
+
+```bash
+curl -X POST http://localhost:3000/api/prioritize \
+  -H "Content-Type: application/json" \
+  -d '{
+    "projectId": "demo-project",
+    "featureName": "Smart CTA auto-layout",
+    "summary": "Auto-adjust CTA position for mobile checkout screens.",
+    "checks": {
+      "demosIn30Seconds": true,
+      "showsDefensibility": true,
+      "hasVisibleBusinessImpact": true,
+      "buildableInUnderOneHour": false
+    }
+  }'
+```
+
+### Example response
+```json
+{
+  "projectId": "demo-project",
+  "agent": "lead-surgeon",
+  "featureName": "Smart CTA auto-layout",
+  "summary": "Auto-adjust CTA position for mobile checkout screens.",
+  "decision": "BUILD",
+  "yesCount": 3,
+  "threshold": 3,
+  "checklist": [
+    { "key": "demosIn30Seconds", "question": "Does it demo in < 30 seconds?", "passed": true },
+    { "key": "showsDefensibility", "question": "Does it show defensibility (data moat, learning)?", "passed": true },
+    { "key": "hasVisibleBusinessImpact", "question": "Does it have visible business impact ($$ metric)?", "passed": true },
+    { "key": "buildableInUnderOneHour", "question": "Can it be built in < 1 hour?", "passed": false }
+  ],
+  "rationale": "Feature passed 3/4 checks (threshold 3). Prioritize for near-term implementation."
+}
+```
+
+---
+
+## 🩺 LLM Health Check
+
+Use this endpoint to verify model/provider readiness before sending production traffic.
+
+```bash
+curl -i http://localhost:3000/api/health/llm
+```
+
+### Example: ready (HTTP 200)
+```json
+{
+  "ready": true,
+  "demoMode": false,
+  "missingProviders": [],
+  "providerStatus": {
+    "openai": { "required": true, "ready": true },
+    "anthropic": { "required": true, "ready": true }
+  },
+  "modelsByPlan": {
+    "free": {
+      "vision": "gpt-4o-mini",
+      "fixDefault": "gpt-4o-mini",
+      "fixEscalated": "gpt-4o-mini",
+      "preference": "gpt-4o-mini"
+    },
+    "pro": {
+      "vision": "gpt-4o",
+      "fixDefault": "gpt-4o-mini",
+      "fixEscalated": "claude-3-5-sonnet-20240620",
+      "preference": "gpt-4o-mini"
+    },
+    "enterprise": {
+      "vision": "gpt-4o",
+      "fixDefault": "gpt-4o-mini",
+      "fixEscalated": "claude-3-5-sonnet-20240620",
+      "preference": "gpt-4o-mini"
+    }
+  }
+}
+```
+
+### Example: not ready (HTTP 503)
+```json
+{
+  "ready": false,
+  "demoMode": true,
+  "missingProviders": ["openai", "anthropic"]
+}
+```
 
 ---
 
