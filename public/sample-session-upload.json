@@ -1,0 +1,82 @@
+{
+  "projectId": "demo-project",
+  "sessionId": "sess_20260308_demo_001",
+  "uploadedAt": "2026-03-08T00:00:00Z",
+  "userContext": {
+    "device": "mobile",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "browser": "Mobile Safari"
+  },
+  "events": [
+    {
+      "timestampSec": 10,
+      "screen": "pricing",
+      "eventType": "click",
+      "elementId": "pricing-card-header-pro",
+      "x": 188,
+      "y": 312,
+      "result": "no_action"
+    },
+    {
+      "timestampSec": 11,
+      "screen": "pricing",
+      "eventType": "click",
+      "elementId": "pricing-card-header-pro",
+      "x": 191,
+      "y": 316,
+      "result": "no_action"
+    },
+    {
+      "timestampSec": 12,
+      "screen": "pricing",
+      "eventType": "click",
+      "elementId": "pricing-card-header-pro",
+      "x": 193,
+      "y": 314,
+      "result": "no_action"
+    },
+    {
+      "timestampSec": 26,
+      "screen": "checkout",
+      "eventType": "scroll",
+      "elementId": "checkout-page",
+      "scrollY": 0,
+      "note": "primary CTA out of viewport"
+    },
+    {
+      "timestampSec": 28,
+      "screen": "checkout",
+      "eventType": "scroll",
+      "elementId": "checkout-page",
+      "scrollY": 420,
+      "note": "CTA becomes visible only after additional scroll"
+    }
+  ],
+  "tickets": [
+    {
+      "ticketId": "t_1001",
+      "createdAt": "2026-03-07T21:42:11Z",
+      "message": "I kept tapping the Pro plan title but nothing happened. Thought the page was broken."
+    },
+    {
+      "ticketId": "t_1002",
+      "createdAt": "2026-03-07T22:15:04Z",
+      "message": "On my phone I couldn't find the Continue button on checkout until I scrolled a lot."
+    }
+  ],
+  "frameHints": [
+    {
+      "timestampSec": 12,
+      "frameRef": "frame_012.jpg",
+      "hint": "Repeated taps on clickable-looking element without state change."
+    },
+    {
+      "timestampSec": 28,
+      "frameRef": "frame_028.jpg",
+      "hint": "Primary CTA initially hidden below fold on mobile."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "projectId": "demo-checkout-dead-click",
+  "userContext": {
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "page": "/checkout"
+  },
+  "events": [
+    { "eventType": "page_view", "elementId": "checkout-page", "x": 0, "y": 0, "result": "ok", "scrollY": 0 },
+    { "eventType": "click", "elementId": "continueToPayment", "x": 1042, "y": 712, "result": "failed", "scrollY": 180 },
+    { "eventType": "click", "elementId": "continueToPayment", "x": 1039, "y": 709, "result": "failed", "scrollY": 182 },
+    { "eventType": "click", "elementId": "continueToPayment", "x": 1045, "y": 714, "result": "failed", "scrollY": 184 },
+    { "eventType": "click", "elementId": "continueToPayment", "x": 1041, "y": 711, "result": "failed", "scrollY": 186 },
+    { "eventType": "click", "elementId": "continueToPayment", "x": 1044, "y": 713, "result": "failed", "scrollY": 188 },
+    { "eventType": "rage_click", "elementId": "continueToPayment", "x": 1043, "y": 712, "result": "failed", "scrollY": 189 },
+    { "eventType": "click", "elementId": "couponApply", "x": 870, "y": 640, "result": "ok", "scrollY": 170 }
+  ]
+}

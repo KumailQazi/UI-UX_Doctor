@@ -1,0 +1,19 @@
+{
+  "projectId": "demo-low-confidence-noise",
+  "userContext": {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "page": "/landing"
+  },
+  "events": [
+    { "eventType": "page_view", "elementId": "landing-page", "x": 0, "y": 0, "result": "ok", "scrollY": 0 },
+    { "eventType": "mousemove", "elementId": "hero", "x": 640, "y": 220, "result": "ok", "scrollY": 0 },
+    { "eventType": "scroll", "elementId": "landing-scroll", "x": 640, "y": 680, "result": "ok", "scrollY": 120 },
+    { "eventType": "click", "elementId": "learnMore", "x": 602, "y": 402, "result": "ok", "scrollY": 110 },
+    { "eventType": "scroll", "elementId": "landing-scroll", "x": 638, "y": 682, "result": "ok", "scrollY": 260 },
+    { "eventType": "click", "elementId": "nav-pricing", "x": 991, "y": 36, "result": "ok", "scrollY": 0 },
+    { "eventType": "page_view", "elementId": "pricing-page", "x": 0, "y": 0, "result": "ok", "scrollY": 0 }
+  ]
+}

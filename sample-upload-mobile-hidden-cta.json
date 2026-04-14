@@ -1,0 +1,20 @@
+{
+  "projectId": "demo-mobile-hidden-cta",
+  "userContext": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "page": "/pricing"
+  },
+  "events": [
+    { "eventType": "page_view", "elementId": "pricing-page", "x": 0, "y": 0, "result": "ok", "scrollY": 0 },
+    { "eventType": "scroll", "elementId": "pricing-scroll", "x": 195, "y": 760, "result": "ok", "scrollY": 220 },
+    { "eventType": "scroll", "elementId": "pricing-scroll", "x": 196, "y": 762, "result": "ok", "scrollY": 540 },
+    { "eventType": "scroll", "elementId": "pricing-scroll", "x": 194, "y": 764, "result": "ok", "scrollY": 910 },
+    { "eventType": "scroll", "elementId": "pricing-scroll", "x": 198, "y": 766, "result": "ok", "scrollY": 1240 },
+    { "eventType": "scroll", "elementId": "pricing-scroll", "x": 193, "y": 768, "result": "ok", "scrollY": 1505 },
+    { "eventType": "tap", "elementId": "plan-card-pro", "x": 201, "y": 702, "result": "ok", "scrollY": 1180 },
+    { "eventType": "tap", "elementId": "help-link", "x": 88, "y": 805, "result": "ok", "scrollY": 1480 }
+  ]
+}

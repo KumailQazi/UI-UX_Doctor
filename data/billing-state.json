@@ -1,0 +1,27 @@
+{
+  "orgByProject": {
+    "demo-project": "org-demo-project"
+  },
+  "entitlements": {
+    "org-demo-project": {
+      "plan": "free",
+      "limits": {
+        "analyze": 25,
+        "generate_fix": 100
+      },
+      "features": {
+        "personalization": false,
+        "dashboard": true,
+        "jira": false
+      }
+    }
+  },
+  "usage": {
+    "2026-04": {
+      "org-demo-project": {
+        "analyze": 2,
+        "generate_fix": 1
+      }
+    }
+  }
+}
