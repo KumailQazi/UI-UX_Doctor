@@ -91,7 +91,7 @@ Respond with a JSON array of issues. Each issue must adhere to this JSON structu
   // Simulating the delay of a vision model processing images
   await new Promise((resolve) => setTimeout(resolve, 1500));
 
-  // Returning a generated mock issue based on the schema rules
+  // Returning generated mock issues based on the schema rules
   return [
     {
       issueId: randomUUID(),
@@ -111,5 +111,19 @@ Respond with a JSON array of issues. Each issue must adhere to this JSON structu
       confidence: 0.92,
       whyItMatters: "High frustration signal. User expects navigation but gets stuck, potentially increasing drop-off.",
     },
+    {
+      issueId: randomUUID(),
+      type: "mobile_hidden_cta",
+      severity: "high",
+      summary: "Primary checkout CTA is below the fold on common mobile viewport heights.",
+      evidence: [
+        {
+          timestampSec: frames[2]?.timestampSec || 28,
+          note: "CTA not visible until second scroll; users hesitate and bounce.",
+        }
+      ],
+      confidence: 0.84,
+      whyItMatters: "Reduces conversion by hiding the next-step action at a critical moment.",
+    }
   ];
 }
