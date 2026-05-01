@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { getOpenAIClient, safeParseJson } from "./aiClient";
 import { getAiRadiologistSystemContext } from "./aiRadiologistAgent";
-import type { Issue, ExtractedFrame } from "./issueSchema";
+import type { Issue } from "./issueSchema";
+import type { ExtractedFrame } from "./frameExtractor";
 import { VISION_ANALYSIS_PROMPT } from "./promptTemplates";
 
 export interface AnalysisPayload {

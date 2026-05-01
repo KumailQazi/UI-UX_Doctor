@@ -162,7 +162,8 @@ export default function ResultsView() {
         throw new Error("Failed to save feedback");
       }
 
-      setFeedbackByIssueId((prev) => ({ ...prev, [selectedIssue.issueId]: action }));
+      const feedbackStatus: FeedbackStatus = fixAccepted ? "accepted" : "rejected";
+      setFeedbackByIssueId((prev) => ({ ...prev, [selectedIssue.issueId]: feedbackStatus }));
       setStatus(`✅ Prescription ${action}ed and saved to team memory.`);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Error saving feedback.");
