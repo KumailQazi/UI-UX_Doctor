@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { DEMO_MODE } from "@/lib/env";
 import type { FeedbackRequest } from "@/lib/issueSchema";
 import { getModelForAgent } from "@/lib/modelRouter";
-import { learnFromFeedbackWithLLM } from "@/lib/preferenceMemoryAgent";
+import { learnFromFeedback, loadPreferenceMemory, savePreferenceMemory } from "@/lib/agents/integrationEngineerAgent";
 
 interface PreferencesFile {
   projects: Record<
@@ -48,49 +48,75 @@ export async function POST(request: Request) {
     );
   }
 
-  const filePath = path.join(process.cwd(), "data", "preferences.json");
-  const raw = await readFile(filePath, "utf-8");
-  const data = JSON.parse(raw) as PreferencesFile;
+  // Load existing preference memory (vector-based)
+  const memory = await loadPreferenceMemory(body.projectId);
 
-  if (!data.projects[body.projectId]) {
-    data.projects[body.projectId] = { preferences: [], feedbackLog: [] };
-  }
+  // Add feedback log entry
+  const updatedMemory = {
+    ...memory,
+    feedbackLog: [
+      ...(memory as unknown as { feedbackLog?: Array<unknown> }).feedbackLog ?? [],
+      {
+        issueId: body.issueId,
+        fixAccepted: body.fixAccepted,
+        editedByUser: body.editedByUser,
+        notes: body.notes,
+        createdAt: new Date().toISOString(),
+      },
+    ],
+  };
 
-  data.projects[body.projectId].feedbackLog.push({
-    issueId: body.issueId,
-    fixAccepted: body.fixAccepted,
-    editedByUser: body.editedByUser,
-    notes: body.notes,
-    createdAt: new Date().toISOString(),
-  });
+  let newPreferences: string[] = [];
 
   if (body.notes) {
     if (DEMO_MODE) {
       const inferred = inferPreferenceFromNotes(body.notes);
       if (body.fixAccepted && inferred) {
-        const existing = new Set(data.projects[body.projectId].preferences);
+        const existing = new Set(updatedMemory.rules);
         existing.add(inferred);
-        data.projects[body.projectId].preferences = [...existing];
+        newPreferences = [...existing];
+        updatedMemory.rules = newPreferences;
       }
     } else {
-      const preferenceModel = getModelForAgent("preference");
-      data.projects[body.projectId].preferences = await learnFromFeedbackWithLLM(
-        {
-          feedback: body,
-          existingPreferences: data.projects[body.projectId].preferences,
-        },
-        preferenceModel
-      );
+      // Use Integration Engineer Agent with vector-based learning
+      const preferenceModel = getModelForAgent("integration");
+      const learnedMemory = await learnFromFeedback(body, updatedMemory);
+      newPreferences = learnedMemory.rules;
     }
   }
 
-  await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+  await savePreferenceMemory(updatedMemory);
+
+  // Also update legacy file for backwards compatibility
+  const filePath = path.join(process.cwd(), "data", "preferences.json");
+  try {
+    const raw = await readFile(filePath, "utf-8");
+    const legacyData = JSON.parse(raw) as PreferencesFile;
+    if (!legacyData.projects[body.projectId]) {
+      legacyData.projects[body.projectId] = { preferences: [], feedbackLog: [] };
+    }
+    legacyData.projects[body.projectId].preferences = newPreferences.length > 0
+      ? newPreferences
+      : legacyData.projects[body.projectId].preferences;
+    legacyData.projects[body.projectId].feedbackLog.push({
+      issueId: body.issueId,
+      fixAccepted: body.fixAccepted,
+      editedByUser: body.editedByUser,
+      notes: body.notes,
+      createdAt: new Date().toISOString(),
+    });
+    await writeFile(filePath, JSON.stringify(legacyData, null, 2), "utf-8");
+  } catch {
+    // Legacy file might not exist, that's ok
+  }
 
   return NextResponse.json(
     {
       ok: true,
-      message: "Feedback stored",
+      message: "Feedback stored and preferences updated",
       projectId: body.projectId,
+      preferencesCount: newPreferences.length,
+      learnedFrom: body.notes ? "feedback notes" : undefined,
     },
     { status: 200 }
   );

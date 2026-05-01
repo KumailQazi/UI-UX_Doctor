@@ -2,8 +2,10 @@ import { readFile } from "node:fs/promises";
 import { NextResponse } from "next/server";
 import { guardUsage, incrementUsage } from "@/lib/billing";
 import { DEMO_MODE, PREFERENCES_PATH } from "@/lib/env";
-import { generateFixWithLLM } from "@/lib/frontendFixAgent";
+import { generateFix, loadDesignTokens, parseComponentDNA, generatePersonalizedNote } from "@/lib/agents/uiSurgeonAgent";
+import { validateFix, type ValidationReport } from "@/lib/agents/qualitySentinelAgent";
 import { getModelForAgent } from "@/lib/modelRouter";
+import { loadPreferenceMemory } from "@/lib/agents/integrationEngineerAgent";
 import type {
   GenerateFixRequest,
   GenerateFixResponse,
@@ -110,31 +112,68 @@ export async function POST(request: Request) {
     );
   }
 
-  const raw = await readFile(PREFERENCES_PATH, "utf-8");
-  const preferencesData = JSON.parse(raw) as PreferencesFile;
+  // Load preferences using vector-based memory system
+  const preferenceMemory = await loadPreferenceMemory(body.projectId);
+  const projectPreferences = preferenceMemory.rules;
 
-  const projectPreferences =
-    preferencesData.projects?.[body.projectId]?.preferences ?? [];
+  // Load design tokens if available
+  const designTokens = body.componentContext?.existingCode
+    ? (await loadDesignTokens("tokens.json")) ?? undefined
+    : undefined;
+
+  // Parse existing component DNA for surgical precision
+  const componentDNA = body.componentContext?.existingCode
+    ? parseComponentDNA(body.componentContext.existingCode)
+    : undefined;
 
   let baseFix: GenerateFixResponse;
   if (DEMO_MODE) {
     baseFix = getFixForIssue(body.issue);
   } else {
+    // Use evolved UI Surgeon Agent with design system integration
     const fixModel = getModelForAgent("fix", usageGate.plan, body.issue);
-    baseFix = await generateFixWithLLM(
+    baseFix = await generateFix(body.issue, {
+      framework: body.componentContext?.framework ?? "react",
+      styling: body.componentContext?.styling ?? "tailwind",
+      existingCode: body.componentContext?.existingCode,
+      designTokens,
+      componentName: componentDNA ? "FixedComponent" : undefined,
+    });
+
+    // Run Quality Sentinel validation
+    const validationReport: ValidationReport = await validateFix(
+      baseFix,
+      body.issue,
       {
-        issue: body.issue,
-        preferences: projectPreferences,
-        componentContext: body.componentContext,
-      },
-      fixModel
+        existingCode: body.componentContext?.existingCode,
+        framework: body.componentContext?.framework ?? "react",
+        planFeatures: usageGate.features,
+      }
     );
+
+    // If validation fails, log warnings but still return the fix with validation metadata
+    if (!validationReport.passed) {
+      const failedChecks = validationReport.checks.filter(
+        (c: { passed: boolean; severity: string }) => !c.passed && c.severity === "blocker"
+      );
+      console.warn(
+        `[generate-fix] Quality Sentinel blocked fix:`,
+        failedChecks.map((c: { name: string; details?: string }) => `${c.name}: ${c.details}`)
+      );
+    } else if (!validationReport.approvedForShip) {
+      console.log(
+        `[generate-fix] Quality Sentinel warnings:`,
+        validationReport.checks
+          .filter((c: { passed: boolean }) => !c.passed)
+          .map((c: { name: string }) => c.name)
+      );
+    }
   }
+
+  // Generate personalized note from preferences
   const personalizedNote =
     usageGate.features.personalization && projectPreferences.length > 0
-      ? `Personalized using team preferences: ${projectPreferences
-          .slice(0, 2)
-          .join("; ")}`
+      ? generatePersonalizedNote(body.issue, projectPreferences)
       : undefined;
 
   await incrementUsage(body.projectId, "generate_fix");
@@ -143,7 +182,9 @@ export async function POST(request: Request) {
     {
       ...baseFix,
       personalizedNote,
-    } satisfies GenerateFixResponse,
+      generatedBy: "ui-surgeon-v2",
+      validationStatus: baseFix.validationResult?.passed ? "passed" : "warnings",
+    } satisfies GenerateFixResponse & { generatedBy: string; validationStatus: string },
     { status: 200 }
   );
 }

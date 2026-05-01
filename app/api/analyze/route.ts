@@ -5,9 +5,10 @@ import { guardUsage, incrementUsage } from "@/lib/billing";
 import { DEFAULT_PROJECT_ID } from "@/lib/constants";
 import { DEMO_MODE, DEMO_ISSUES_PATH, STRICT_TWO_ISSUES } from "@/lib/env";
 import type { AnalyzeResponse, HeatmapPoint, Issue } from "@/lib/issueSchema";
-import { rankIssues } from "@/lib/scoring";
-import { extractFrames } from "@/lib/frameExtractor";
-import { analyzeFramesWithVisionModel } from "@/lib/visionAnalystAgent";
+import { rankIssues, getTopIssues } from "@/lib/scoring";
+import { parseSession, type ParsedSession } from "@/lib/sessionParser";
+import { analyzeWithAiRadiologist, correlateSessions } from "@/lib/agents/aiRadiologistAgent";
+import { validateIssue } from "@/lib/agents/qualitySentinelAgent";
 import { getModelForAgent } from "@/lib/modelRouter";
 
 interface SessionEvent {
@@ -124,31 +125,81 @@ export async function POST(request: Request) {
   }
 
   let parsedIssues: Issue[] = [];
+  let correlationData: {
+    occurrenceRate?: number;
+    sessionCount?: number;
+  } = {};
 
   if (DEMO_MODE) {
     const raw = await readFile(DEMO_ISSUES_PATH, "utf-8");
     parsedIssues = JSON.parse(raw) as Issue[];
   } else {
-    const frames = await extractFrames(body.videoUrl);
+    // Use the evolved AI Radiologist Agent with multi-format session parsing
+    const sessionData: ParsedSession = body.sessionData
+      ? parseSession(body.sessionData, "generic")
+      : {
+          sessionId: randomUUID(),
+          source: "api",
+          timestamp: new Date().toISOString(),
+          viewport: { width: 1920, height: 1080, deviceType: "desktop" },
+          frames: [],
+          clicks: [],
+          scrolls: [],
+          forms: [],
+          errors: [],
+          metadata: { duration: 0, pageCount: 0 },
+        };
+
     const visionModel = getModelForAgent("vision", usageGate.plan);
-    parsedIssues = await analyzeFramesWithVisionModel(
+    const analysisResult = await analyzeWithAiRadiologist(
       {
-        frames,
-        sessionMetadata: body.sessionData,
+        frames: sessionData.frames,
+        clicks: sessionData.clicks,
+        viewport: sessionData.viewport,
+        sessionMetadata: body.sessionData as Record<string, unknown> | undefined,
       },
-      visionModel
+      { enableHeatmap: true, enableCrossSession: true }
     );
+
+    // Add correlation data from cross-session analysis (if available)
+    if (analysisResult.correlation) {
+      correlationData = analysisResult.correlation;
+    }
+
+    // Add heatmap points from AI Radiologist
+    parsedIssues = analysisResult.issues.map((issue) => ({
+      ...issue,
+      heatmapPoints: analysisResult.heatmap,
+      // Add cross-session correlation data
+      sessionCount: correlationData.sessionCount,
+      occurrenceRate: correlationData.occurrenceRate,
+    }));
+
+    // Run quality validation on detected issues
+    const validatedIssues: Issue[] = [];
+    for (const issue of parsedIssues) {
+      const validation = await validateIssue(issue);
+      if (validation.valid) {
+        validatedIssues.push(issue);
+      }
+    }
+    parsedIssues = validatedIssues;
   }
 
   const enriched = enrichIssuesWithHeatmap(parsedIssues, body.sessionData);
-  const ranked = rankIssues(enriched);
 
-  const issues = STRICT_TWO_ISSUES ? ranked.slice(0, 2) : ranked.slice(0, 3);
+  // Use ML-enhanced ranking with top N selection
+  const maxIssues = STRICT_TWO_ISSUES ? 2 : 3;
+  const topIssues = getTopIssues(enriched, maxIssues);
 
-  const response: AnalyzeResponse & { projectId: string } = {
+  const response: AnalyzeResponse & {
+    projectId: string;
+    correlation?: { occurrenceRate?: number; sessionCount?: number };
+  } = {
     jobId: randomUUID(),
     projectId,
-    issues,
+    issues: topIssues,
+    correlation: correlationData.sessionCount ? correlationData : undefined,
   };
 
   await incrementUsage(projectId, "analyze");
