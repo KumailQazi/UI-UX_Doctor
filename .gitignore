@@ -42,3 +42,15 @@ next-env.d.ts
 
 # Obsidian Vault
 Obsidian_Vault/
+
+# Runtime data (user-specific)
+/data/billing-state.json
+/data/preferences.json
+
+# Development logs
+commit_updates.md
+.next/dev/logs/
+
+# Telemetry data (if stored locally)
+/data/telemetry/
+/data/prompts/
