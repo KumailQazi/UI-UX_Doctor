@@ -54,3 +54,65 @@ commit_updates.md
 # Telemetry data (if stored locally)
 /data/telemetry/
 /data/prompts/
+
+# Test logs
+/test-results.md
+/TEST_LOG.md
+
+# Debug and temporary files
+/debug-analyze.js
+/tmp/
+*.tmp
+*.temp
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API keys and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Build artifacts
+dist/
+build/
+*.tgz
+*.tar.gz
+
+# Runtime logs
+logs/
+*.log
+
+# Local configuration
+config.local.js
+config.local.json
+
+# Documentation drafts
+*.draft.md
+DRAFT_*.md

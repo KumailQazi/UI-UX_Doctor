@@ -1,7 +1,7 @@
 import { getAnthropicClient, getOpenAIClient, isAnthropicModel, safeParseJson } from "./aiClient";
 import type { Issue, GenerateFixResponse } from "./issueSchema";
 import { FIX_GENERATION_PROMPT } from "./promptTemplates";
-import { getUiSurgeonSystemContext } from "./uiSurgeonAgent";
+import { getUiSurgeonSystemContext } from "./agents/uiSurgeonAgent";
 
 export interface FixPayload {
   issue: Issue;

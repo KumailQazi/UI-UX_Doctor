@@ -1,6 +1,6 @@
 import { getOpenAIClient, safeParseJson } from "./aiClient";
 import type { FeedbackRequest } from "./issueSchema";
-import { getSurgicalAssistantSystemContext } from "./surgicalAssistantAgent";
+import { getSurgicalAssistantSystemContext } from "./agents/integrationEngineerAgent";
 
 export interface PreferencePayload {
   feedback: FeedbackRequest;
