@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { DEFAULT_PROJECT_ID } from "@/lib/constants";
-import { getLeadSurgeonSystemContext, shouldBuildFeature } from "@/lib/leadSurgeonAgent";
+import { getLeadSurgeonSystemContext, shouldBuildFeature } from "@/lib/agents/leadSurgeonAgent";
 
 interface PrioritizeRequest {
   projectId?: string;

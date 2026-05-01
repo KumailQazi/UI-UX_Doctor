@@ -150,6 +150,23 @@ export async function POST(request: Request) {
           metadata: { duration: 0, pageCount: 0 },
         };
 
+    // Check if we have API keys configured
+    if (!DEMO_MODE && !process.env.OPENAI_API_KEY && !process.env.ANTHROPIC_API_KEY && !process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        {
+          error: "API keys not configured",
+          message: "Please add OPENAI_API_KEY, ANTHROPIC_API_KEY, or GEMINI_API_KEY to your environment, or enable demo mode by setting DEMO_MODE=true",
+          demoModeHint: "Create .env.local with: DEMO_MODE=true",
+          supportedProviders: [
+            "OPENAI_API_KEY (for GPT-4o)",
+            "ANTHROPIC_API_KEY (for Claude)",
+            "GEMINI_API_KEY (for Gemini 2.5 Pro)"
+          ]
+        },
+        { status: 401 }
+      );
+    }
+
     const visionModel = getModelForAgent("vision", usageGate.plan);
     const analysisResult = await analyzeWithAiRadiologist(
       {

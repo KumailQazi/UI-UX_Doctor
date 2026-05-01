@@ -1,6 +1,7 @@
 {
   "orgByProject": {
-    "demo-project": "org-demo-project"
+    "demo-project": "org-demo-project",
+    "test": "org-test"
   },
   "entitlements": {
     "org-demo-project": {
@@ -14,13 +15,29 @@
         "dashboard": true,
         "jira": false
       }
+    },
+    "org-test": {
+      "plan": "free",
+      "limits": {
+        "analyze": 25,
+        "generate_fix": 100
+      },
+      "features": {
+        "personalization": false,
+        "dashboard": true,
+        "jira": false
+      }
     }
   },
   "usage": {
-    "2026-04": {
+    "2026-05": {
       "org-demo-project": {
-        "analyze": 2,
-        "generate_fix": 1
+        "analyze": 4,
+        "generate_fix": 0
+      },
+      "org-test": {
+        "analyze": 0,
+        "generate_fix": 0
       }
     }
   }
